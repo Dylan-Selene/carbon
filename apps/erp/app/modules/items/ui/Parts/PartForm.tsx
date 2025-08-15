@@ -32,6 +32,7 @@ import {
   Hidden,
   Input,
   InputControlled,
+  ItemPostingGroup,
   Number,
   Select,
   Submit,
@@ -283,7 +284,9 @@ const PartForm = ({ initialValues, type = "card", onClose }: PartFormProps) => {
                   name="unitOfMeasureCode"
                   label="Unit of Measure"
                 />
-
+                {!isEditing && (
+                  <ItemPostingGroup name="postingGroupId" label="Item Group" />
+                )}
                 {!isEditing && replenishmentSystem !== "Make" && (
                   <Number
                     name="unitCost"

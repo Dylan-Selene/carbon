@@ -1,4 +1,4 @@
-import { Array, ValidatedForm } from "@carbon/form";
+import { ValidatedForm } from "@carbon/form";
 import {
   ModalCard,
   ModalCardBody,
@@ -17,10 +17,12 @@ import { useEffect, useState } from "react";
 import type { z } from "zod";
 import { TrackingTypeIcon } from "~/components";
 import {
+  Array,
   CustomFormFields,
   DefaultMethodType,
   Hidden,
   InputControlled,
+  ItemPostingGroup,
   Number,
   Select,
   Submit,
@@ -297,6 +299,7 @@ const MaterialForm = ({
                   minValue={0}
                 />
 
+                <ItemPostingGroup name="postingGroupId" label="Item Group" />
                 <Array name="sizes" label="Sizes" />
 
                 <CustomFormFields table="material" tags={initialValues.tags} />
