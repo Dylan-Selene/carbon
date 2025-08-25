@@ -4,13 +4,15 @@ declare global {
   interface Window {
     env: {
       CARBON_EDITION: string;
+      CLOUDFLARE_TURNSTILE_SITE_KEY: string;
       SUPABASE_URL: string;
       SUPABASE_ANON_KEY: string;
       POSTHOG_API_HOST: string;
       POSTHOG_PROJECT_PUBLIC_KEY: string;
+      QUICKBOOKS_CLIENT_ID: string;
       VERCEL_URL: string;
       VERCEL_ENV: string;
-      CLOUDFLARE_TURNSTILE_SITE_KEY: string;
+      XERO_CLIENT_ID: string;
     };
   }
 }
@@ -19,10 +21,15 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       CARBON_EDITION: string;
+      CLOUDFLARE_TURNSTILE_SITE_KEY: string;
+      CLOUDFLARE_TURNSTILE_SECRET_KEY: string;
       DOMAIN: string;
       NOVU_SECRET_KEY: string;
       POSTHOG_API_HOST: string;
       POSTHOG_PROJECT_PUBLIC_KEY: string;
+      QUICKBOOKS_CLIENT_SECRET: string;
+      RESEND_API_KEY: string;
+      RESEND_DOMAIN: string;
       SESSION_SECRET: string;
       SESSION_KEY: string;
       SESSION_ERROR_KEY: string;
@@ -41,8 +48,7 @@ declare global {
       UPSTASH_REDIS_REST_TOKEN: string;
       VERCEL_URL: string;
       VERCEL_ENV: string;
-      CLOUDFLARE_TURNSTILE_SITE_KEY: string;
-      CLOUDFLARE_TURNSTILE_SECRET_KEY: string;
+      XERO_CLIENT_SECRET: string;
     }
   }
 }
@@ -100,6 +106,15 @@ const getEdition = () => {
 
 export const CarbonEdition = getEdition();
 
+export const CLOUDFLARE_TURNSTILE_SITE_KEY = getEnv(
+  "CLOUDFLARE_TURNSTILE_SITE_KEY",
+  { isSecret: false, isRequired: false }
+);
+export const CLOUDFLARE_TURNSTILE_SECRET_KEY = getEnv(
+  "CLOUDFLARE_TURNSTILE_SECRET_KEY",
+  { isRequired: false }
+);
+
 export const DOMAIN = getEnv("DOMAIN", { isRequired: false }); // preview environments need no domain
 export const EXCHANGE_RATES_API_KEY = getEnv("EXCHANGE_RATES_API_KEY", {
   isRequired: false,
@@ -110,6 +125,16 @@ export const NOVU_APPLICATION_ID = getEnv("NOVU_APPLICATION_ID", {
   isSecret: false,
 });
 export const NOVU_SECRET_KEY = getEnv("NOVU_SECRET_KEY");
+
+export const QUICKBOOKS_CLIENT_ID = getEnv("QUICKBOOKS_CLIENT_ID", {
+  isRequired: false,
+});
+
+export const QUICKBOOKS_CLIENT_SECRET = getEnv("QUICKBOOKS_CLIENT_SECRET", {
+  isRequired: false,
+  isSecret: true,
+});
+
 export const RESEND_DOMAIN =
   getEnv("RESEND_DOMAIN", {
     isRequired: false,
@@ -160,6 +185,14 @@ export const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days;
 export const REFRESH_ACCESS_TOKEN_THRESHOLD = 60 * 10; // 10 minutes left before token expires
 export const VERCEL_URL = getEnv("VERCEL_URL", { isSecret: false });
 
+export const XERO_CLIENT_ID = getEnv("XERO_CLIENT_ID", {
+  isRequired: false,
+});
+export const XERO_CLIENT_SECRET = getEnv("XERO_CLIENT_SECRET", {
+  isRequired: false,
+  isSecret: true,
+});
+
 /**
  * Shared envs
  */
@@ -181,14 +214,6 @@ export const SUPABASE_URL = getEnv("SUPABASE_URL", { isSecret: false });
 export const SUPABASE_ANON_KEY = getEnv("SUPABASE_ANON_KEY", {
   isSecret: false,
 });
-export const CLOUDFLARE_TURNSTILE_SITE_KEY = getEnv(
-  "CLOUDFLARE_TURNSTILE_SITE_KEY",
-  { isSecret: false, isRequired: false }
-);
-export const CLOUDFLARE_TURNSTILE_SECRET_KEY = getEnv(
-  "CLOUDFLARE_TURNSTILE_SECRET_KEY",
-  { isRequired: false }
-);
 
 export function getAppUrl() {
   if (VERCEL_ENV === "production" || NODE_ENV === "production") {
@@ -205,15 +230,17 @@ export function getAppUrl() {
 export function getBrowserEnv() {
   return {
     CARBON_EDITION,
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY,
+    CLOUDFLARE_TURNSTILE_SITE_KEY,
     POSTHOG_API_HOST,
     POSTHOG_PROJECT_PUBLIC_KEY,
+    NODE_ENV,
     NOVU_APPLICATION_ID,
+    QUICKBOOKS_CLIENT_ID,
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY,
     VERCEL_ENV,
     VERCEL_URL,
-    NODE_ENV,
-    CLOUDFLARE_TURNSTILE_SITE_KEY,
+    XERO_CLIENT_ID,
   };
 }
 

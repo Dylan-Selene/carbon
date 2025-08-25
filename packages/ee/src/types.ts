@@ -18,6 +18,13 @@ export type IntegrationConfig = {
     value: unknown;
   }[];
   schema: ZodType;
+  oauth?: {
+    authUrl: string;
+    clientId: string;
+    redirectUri: string;
+    scopes: string[];
+    tokenUrl: string;
+  };
   onInitialize?: () => void | Promise<void>;
   onUninstall?: () => void | Promise<void>;
 };

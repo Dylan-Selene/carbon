@@ -3,9 +3,13 @@ import { requirePermissions } from "@carbon/auth/auth.server";
 import { flash } from "@carbon/auth/session.server";
 import { integrations as availableIntegrations } from "@carbon/ee";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { redirect, type LoaderFunctionArgs } from "@vercel/remix";
+import { json, redirect, type LoaderFunctionArgs } from "@vercel/remix";
 import { IntegrationsList, getIntegrations } from "~/modules/settings";
 import { path } from "~/utils/path";
+
+export const config = {
+  runtime: "nodejs",
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const { client, companyId } = await requirePermissions(request, {
@@ -23,11 +27,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
     );
   }
 
-  return {
+  return json({
     installedIntegrations: (integrations.data
       .filter((i) => i.active)
       .map((i) => i.id) ?? []) as string[],
-  };
+    state: crypto.randomUUID(),
+  });
 }
 
 export default function IntegrationsRoute() {

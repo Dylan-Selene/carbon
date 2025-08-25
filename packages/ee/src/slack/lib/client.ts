@@ -14,11 +14,6 @@ import {
 
 const { App } = Bolt;
 
-export const slackOAuthCallbackSchema = z.object({
-  code: z.string(),
-  state: z.string(),
-});
-
 export const slackOAuthTokenResponseSchema = z.object({
   ok: z.literal(true),
   app_id: z.string(),
@@ -52,9 +47,6 @@ export const slackOAuthTokenResponseSchema = z.object({
     .nullable()
     .optional(),
 });
-
-// Legacy export for backward compatibility - should be removed eventually
-export const slackAuthResponseSchema = slackOAuthTokenResponseSchema;
 
 let slackInstaller: InstallProvider | null = null;
 

@@ -24,8 +24,7 @@ export const integrations = [
 ];
 
 export { Onshape, Logo as OnshapeLogo } from "./onshape/config";
+export { QuickBooks } from "./quickbooks/config";
 export { Slack } from "./slack/config";
 export * from "./slack/lib/messages";
-
-// TODO: export as @carbon/ee/paperless
-export { PaperlessPartsClient } from "./paperless-parts/lib/client";
+export { Xero } from "./xero/config";

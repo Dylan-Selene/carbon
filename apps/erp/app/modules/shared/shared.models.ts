@@ -95,6 +95,11 @@ export const feedbackValidator = z.object({
   location: z.string(),
 });
 
+export const oAuthCallbackSchema = z.object({
+  code: z.string(),
+  state: z.string(),
+});
+
 export const operationAttributeValidator = z
   .object({
     id: zfd.text(z.string().optional()),

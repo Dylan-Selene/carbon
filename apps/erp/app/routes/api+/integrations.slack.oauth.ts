@@ -9,12 +9,12 @@ import { Slack } from "@carbon/ee";
 import {
   createSlackApp,
   getSlackInstaller,
-  slackOAuthCallbackSchema,
   slackOAuthTokenResponseSchema,
 } from "@carbon/ee/slack.server";
 import { json, redirect, type LoaderFunctionArgs } from "@vercel/remix";
 import z from "zod";
 import { upsertCompanyIntegration } from "~/modules/settings/settings.server";
+import { oAuthCallbackSchema } from "~/modules/shared";
 import { path } from "~/utils/path";
 
 export const config = {
@@ -29,7 +29,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const searchParams = Object.fromEntries(url.searchParams.entries());
 
-  const slackAuthResponse = slackOAuthCallbackSchema.safeParse(searchParams);
+  const slackAuthResponse = oAuthCallbackSchema.safeParse(searchParams);
 
   if (!slackAuthResponse.success) {
     return json({ error: "Invalid Slack auth response" }, { status: 400 });

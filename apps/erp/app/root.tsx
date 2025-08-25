@@ -58,6 +58,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
     NOVU_APPLICATION_ID,
+    QUICKBOOKS_CLIENT_ID,
+    XERO_CLIENT_ID,
   } = getBrowserEnv();
 
   const sessionFlash = await getSessionFlash(request);
@@ -72,6 +74,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
         SUPABASE_URL,
         SUPABASE_ANON_KEY,
         NOVU_APPLICATION_ID,
+        QUICKBOOKS_CLIENT_ID,
+        XERO_CLIENT_ID,
       },
       mode: getMode(request),
       theme: getTheme(request),
